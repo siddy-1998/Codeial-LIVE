@@ -30,3 +30,5 @@ export const REMOVE_FRIEND = 'REMOVE_FRIEND';
 export const ADD_POST = 'ADD_POST';
 //comment
 export const ADD_COMMENT = 'ADD_COMMENT';
+//Like
+export const UPDATE_POST_LIKE = 'UPDATE_POST_LIKE';
