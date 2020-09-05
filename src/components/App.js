@@ -8,7 +8,7 @@ import { authenticateUser } from '../actions/auth';
 import { fetchPosts } from '../actions/posts';
 import { Home , Navbar, Page404 , Login , Signup , Settings , UserProfile} from './';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
-
+import { fetchUserFriends } from '../actions/friends';
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, path, component: Component } = privateRouteProps;
@@ -53,11 +53,12 @@ class App extends React.Component {
         })
       );
 
+      this.props.dispatch(fetchUserFriends());
     }
   }
 
   render() {
-    const { posts , auth } = this.props;
+    const { posts, auth, friends } = this.props;
     return (
       <Router>
         <div>
@@ -68,7 +69,14 @@ class App extends React.Component {
               exact
               path="/"
               render={(props) => {
-                return <Home {...props} posts={posts} />;
+                return (
+                  <Home
+                    {...props}
+                    posts={posts}
+                    friends={friends}
+                    isLoggedin={auth.isLoggedin}
+                  />
+                );
               }}
             />
             <Route path="/login" component={Login} />
@@ -95,6 +103,7 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 
